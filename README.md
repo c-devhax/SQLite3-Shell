@@ -3,7 +3,7 @@
 An SQLite3 Shell made in Python, By GeorgeCY2! Forked and modified by c-devhax
 
 # Using the shell:
-The Shell is available on all platforms, You can use it anywhere to modify your databases and use the commands!
+The Shell is available on Windows, Linux and MacOS, You can use it anywhere to modify your databases and use sqlite3 shell.
 # Requirements
 
 **Python Version:** Python 3+
@@ -17,21 +17,19 @@ Here you input the first filename, dont inlcude `.db`, and i dont recommend crea
 
 **For example:**
 
-we have a folder of files like this
-
-`sqlite3-shell.py`
+We have a databtase names `test`: 
 
 `test.db`
 
-now lets load our test database to do commands
+Running the script `sqlite3-shell.py` will output something like this:
 
-so we input the filename of database:
-
-`Welcome, please input your first database you wanna load or start creating it
+`SQLite3-Shell, brought to you by GeorgeCY2 and c-devhax. Please enter the name of the database you want to connect to.
 .-----------------------------------------------------------------------------`
 
-`filename of db>test`
+`sqlite-shell> `
 
-then we should have a message saying "Database loaded!" and ready to run sqlite commands!
+To load a database, you can just write the name of your database (without the trailing `.db`).
 
-use `help` during the active session if you want to see the core commands
+Once the database has been loaded, you will see `SQLite3 Shell v1.1 by GeorgeCY (Made in Python)` printed to the console, and you will be able to run any sqlite3 commands on said database.
+
+Use `help` during the active session if you want to see the core commands

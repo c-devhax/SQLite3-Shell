@@ -13,19 +13,18 @@ elif platform == "darwin":
 print("Booting Sqlite3 shell...")
 print("------------------------")
 print("The required version of Python is Python 3+")
-time.sleep(2)
 os.system(clear_comm)
-print("Welcome, please input your first database you wanna load or start creating it")
+print("SQLite3-Shell, brought to you by GeorgeCY2 and c-devhax. Please enter the name of the database you want to connect to.")
 print("-----------------------------------------------------------------------------")
-filename = input("filename of db> ")
-while filename == "":
+dbname = input("sqlite-shell> ")
+while dbname == "":
     print("Please enter a database name.")
-    filename = input("filename of db> ")
+    dbname = input("filename of db> ")
 
 print("Please Wait...")
 print("--------------")
 try:
-    db = sqlite3.connect(f"{filename}.db")
+    db = sqlite3.connect(f"{dbname}.db")
     c = db.cursor()
 except:
     print("something went wrong, or failed to load database!")
@@ -35,13 +34,20 @@ except:
 finally:
     print("Database loaded!")
     print("----------------")
-    time.sleep(2)
     os.system(clear_comm)
     print("SQLite3 Shell v1.1 by GeorgeCY (Made in Python)")
     print("------------------------------")
+    tables = c.execute("SELECT name FROM sqlite_master WHERE type='table'")        
+    if not tables:
+        print(f"Database {dbname} is empty.")        
+    else:
+        print("Available tables:")            
+        for row in tables:
+            for val in row:                    
+                print(val)
 
 while True:
-    try:
+    try:  
         commands = input("sqlite> ")
         while commands == "":
             print("Please enter an sqlite3 command.")
@@ -66,17 +72,25 @@ while True:
         if commands == "help":
             print("Help:")
             print("Shell Commands:")
-            print("exit: Exits the program (not way recommended because it doesnt close the database!)")
-            print("close: Closes the database, then exits the shell!")
-            print("whats-new: Prints whats new in every update")
+            print("exit: Exits the program (not recommended because it doesnt close the database).")
+            print("close: Closes the database, then exits the shell.")
+            print("whats-new: Prints what's new in the current update.")
             print("-------------------------------------------------")
             print("Database Commands:")
-            print("commit: commit/saves the database (occurs error when none of the changes was made)")
-            print("[Note: when the number 0 Prints, it means sucess!]")
+            print("commit: commits/saves the database (throws an error when the changes could not be made)")
             continue
 
-
-
+        if commands == "commit":
+            db.commit()
+            print("database commited!")
+            continue
+        
+        if commands.lower().startswith("info"):
+            table_name = commands.split()[1]
+            table_info = c.execute(f"pragma table_info({table_name})")
+            for col in table_info:
+                print(f"Name: {col[1]}; Data Type: {col[2].lower()}")
+            continue
 
         output =  c.execute(f"{commands}")
         if not output:
@@ -85,16 +99,6 @@ while True:
             for line in output:
                 print(line)
 
-        print(0)
-        
-        if commands.upper().startswith("SELECT"):
-            for rows in c.fetchall():
-                print(rows)
-        
-        if commands == "commit":
-            db.commit()
-            print("database commited!")
-        
     except:
         print("Error Occured:")
         traceback.print_exc()
