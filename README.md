@@ -1,17 +1,14 @@
 # SQLite3-Shell
-## Note:
-My project for `SQLite3-Shell` is going to be discontinued, that's why i havent updated it for a year. But you can still use my shell and modify it when you download it at any time if you want
-
 ---
-An SQLite3 Shell made in Python, By Me!
+An SQLite3 Shell made in Python, By GeorgeCY2! Forked and modified by c-devhax
 
 # Using the shell:
-The Shell is available for both platforms, You can use it anywhere to modify your databases and use the commands!
+The Shell is available on all platforms, You can use it anywhere to modify your databases and use the commands!
 # Requirements
 
 **Python Version:** Python 3+
 
-**OS:** Windows (Available), Linux (Available)
+**OS:** Windows (Available), Linux (Available), Mac (Available)
 # How to use it!
 First wait for 2 seconds to load, once done, you should be able to be waiting for an input like this:
 ![alt text](https://cdn.discordapp.com/attachments/435865641619161108/462563610531463169/unknown.png)
@@ -22,7 +19,7 @@ Here you input the first filename, dont inlcude `.db`, and i dont recommend crea
 
 we have a folder of files like this
 
-`sqlite3-shell-windows.py`
+`sqlite3-shell.py`
 
 `test.db`
 
