@@ -4,6 +4,8 @@ import os
 import traceback
 from sys import platform
 
+from output_utils import *
+
 comm_prefix = "sqlite-shell"
 
 clear_comm = "cls"
@@ -23,17 +25,17 @@ def db_connect_interface():
 	try:
 		db = sqlite3.connect(f"{dbname}.db")
 		c = db.cursor()
-		print("Database loaded!")
+		success("Database loaded!")
 		return db, c
 	except:
-		print("something went wrong, or failed to load database!")
-		print("Restart shell!")
+		error("something went wrong, or failed to load database!")
+		error("Restart shell!")
 		input()
 		exit()
 
 def print_tables(c):
 	tables = c.execute("SELECT name FROM sqlite_master WHERE type='table'")
-	if tables.rowcount in [-1, 0]:
+	if tables.rowcount == -1:
 		print(f"Database is empty.")
 	else:
 		print("Available tables:")
@@ -44,12 +46,12 @@ def print_tables(c):
 def get_command():
 	command = input(f"{comm_prefix}> ")
 	while command == "":
-		print("Please enter a sqlite3 command.")
+		warning("Please enter a sqlite3 command.")
 		command = input(f"{comm_prefix}> ")
 	return command
 
 def print_help():
-	print("Help:")
+	success("Help:")
 	print("Shell Commands:")
 	print("exit: Exits the program (not recommended because it doesnt close the database).")
 	print("close: Closes the database, then exits the shell.")
@@ -93,22 +95,22 @@ if __name__ == "__main__":
 
 			elif commands == "commit":
 				db.commit()
-				print("database commited!")
+				success("Changes commited!")
 							
 			elif commands.lower().startswith("info"):
 				table_name = commands.split()[1]
 				table_info = c.execute(f"pragma table_info({table_name})")
 				for col in table_info:
-					print(f"Name: {col[1]}; Data Type: {col[2].lower()}")
+					success(f"Name: {col[1]}; Data Type: {col[2].lower()}")
 			else:
 				output =  c.execute(f"{commands}")
 			
 				if not output:
-					print("No output.")
+					error("No output.")
 				else:
 					for line in output:
-						print(line)
+						success(line)
 
 		except:
-			print("Error Occured:")
+			error("[Error]:")
 			traceback.print_exc()
